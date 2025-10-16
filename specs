@@ -1,0 +1,265 @@
+CONTEXTE
+En tant que développeur Java web, vous êtes chargé de concevoir et développer
+un système de télé-expertise médicale. Ce système vise à optimiser le parcours
+patient en facilitant la coordination entre médecins généralistes et spécialistes,
+tout en assurant une prise en charge efficace et rapide.
+Le système permet à un médecin généraliste de demander l'avis d'un médecin
+spécialiste pour un patient donné, favorisant ainsi une collaboration médicale à
+distance et une meilleure qualité de soins.
+Processus détaillé
+1. Arrivée et enregistrement du patient
+Lorsqu'un patient arrive à l'hôpital, un infirmier procède à l'accueil initial :
+● Saisie des données administratives : identité, coordonnées, numéro de
+sécurité sociale, mutuelle
+● Recueil des données médicales : antécédents, allergies, traitements en
+cours
+● Mesure des signes vitaux :
+○ Tension artérielle
+○ Fréquence cardiaque
+○ Température corporelle
+○ Fréquence respiratoire
+○ Poids et taille (si nécessaire)
+2. File d'attente
+Une fois l'enregistrement terminé, le patient est automatiquement intégré dans la
+file d'attente pour consulter un médecin généraliste.
+3. Consultation avec le médecin généraliste
+Le généraliste accède au dossier du patient comprenant toutes les informations
+saisies par l'infirmier. Il procède ensuite à :
+● L'examen clinique du patient: C'est l'examen physique que le médecin fait
+sur le patient (toucher, écouter, regarder, etc.)
+● L'analyse des symptômes: C'est ce que le patient ressent et raconte au
+médecin (ses plaintes)
+● La création d'une consultation dans le système avec ses observations
+4. Décision de prise en charge
+À ce stade, deux scénarios sont possibles :
+Scénario A : Prise en charge directe
+Si le généraliste peut gérer la situation (pathologie courante, prescription simple),
+il :
+● Établit un diagnostic (La maladie identifiée par le médecin)
+● Prescrit un traitement: Les médicaments prescrits (Exemple : - Paracétamol
+1g, 3 fois/jour - Sirop antitussif, 2 cuillères/jour)
+● Clôture la consultation (Bouton Clôturer, statut : TERMINEE)
+Scénario B : Besoin d'une télé-expertise
+Si la situation nécessite l'avis d'un spécialiste, le généraliste suit ces étapes :
+Étape 1 : Demande d'Avis Spécialiste
+● Le généraliste clique sur le bouton "Demander avis spécialiste"
+● La consultation est sauvegardée avec le statut :
+EN_ATTENTE_AVIS_SPECIALISTE
+● La consultation reste ouverte (non clôturée) jusqu'à réception de l'avis
+Étape 2 : Identification de la Spécialité
+● Le généraliste sélectionne la spécialité médicale requise selon le cas du
+patient
+● Exemples : Cardiologue, Pneumologue, Dermatologue, Neurologue,
+Endocrinologue, etc.
+Étape 3 : Recherche des Spécialistes
+● Le système affiche automatiquement la liste des spécialistes de cette
+spécialité
+● Informations affichées : Nom, tarif de consultation, statut de disponibilité
+● Utilisation Stream API : filtre par spécialité et trie par tarif
+Étape 4 : Vérification de la Disponibilité
+● Le généraliste sélectionne un spécialiste
+● Le système affiche ses créneaux horaires en temps réel :
+○ Créneaux disponibles (futurs uniquement)
+○ Créneaux déjà réservés ou passés
+● Le généraliste choisit un créneau disponible
+Étape 5 : Création et Liaison de la Demande
+Le généraliste remplit le formulaire de demande avec :
+● Question posée au spécialiste
+● Lie la demande d'expertise à la consultation, statut :
+EN_ATTENTE_AVIS_SPECIALISTE
+● Niveau de priorité (URGENTE / NORMALE / NON URGENTE)
+● Notifie le spécialiste de la nouvelle demande
+Communication entre professionnels
+Le généraliste contacte le spécialiste pour obtenir son avis d'expert concernant :
+● Le diagnostic : confirmation ou orientation diagnostique
+● Une analyse : interprétation de résultats d'examens (imagerie, analyses
+biologiques)
+● Une stratégie thérapeutique : choix du traitement le plus adapté
+● La prise en charge optimale : conseils sur la conduite à tenir
+Modalités d'échange
+Le système permet plusieurs modes de communication entre les deux médecins :
+● Télé-expertise synchrone :
+○ Échange en direct par visioconférence ou téléphone
+○ Discussion du cas en temps réel
+○ Réponse immédiate du spécialiste
+● Télé-expertise asynchrone :
+○ Le généraliste transmet le dossier patient via la plateforme
+○ Le spécialiste examine le dossier
+○ Réponse sous 24-48h avec son avis écrit
+Les exigences fonctionnelles:
+Module Authentification
+● Login/Logout simple
+● 3 rôles : Généraliste, Spécialiste et Infirmier
+Module Infirmier
+US1 : Accueil du patient
+Étape 1 : Recherche du patient
+Étape 2a : Patient existant trouvé
+● Afficher ses informations;
+● Saisir uniquement les nouveaux signes vitaux
+● Ajouter à la file d'attente
+Étape 2b : Nouveau patient
+● Nom, prénom, date de naissance
+● Numéro de sécurité sociale
+● Téléphone, adresse (optionnel)
+● signes vitaux
+● Créer le dossier patient
+● Après enregistrement : Le patient est automatiquement ajouté à la file
+d’attente
+US2 : Voir la liste des patients enregistrés
+● Liste simple des patients du jour
+● Affichage : Nom, prénom, heure d'arrivée, signes vitaux, Numéro de sécurité
+sociale
+● Tri par heure d'arrivée (du plus ancien au plus récent)
+● Utilisation Stream API : Filtrer les patients par date d'enregistrement
+Module Médecin Généraliste
+US1 : Créer une consultation
+● Sélectionner un patient existant
+● Saisir le motif et les observations
+● Coût consultation : 150dh (fixe)
+US3 : Demander une expertise
+● Choisir une spécialité
+● Utilisation Stream API : filtrer les spécialistes disponibles par spécialité et
+tarif
+● Voir les créneaux disponibles (horaires fixes prédéfinis)
+● Sélectionner un créneau
+● Poser une question au spécialiste et fournir des données et analyses
+US4 : Voir le coût total
+● Consultation (ex: 150DH) + Expertise (tarif du spécialiste) + actes
+techniques médicaux
+● Utilisation Lambda : calcul avec map().sum()
+Module Médecin Spécialiste
+US5 : Configurer son profil
+● Définir son tarif pour une reservation
+● Définir sa spécialité
+● Durée moyenne de consultation (fixe : 30 min)
+US6 : Voir ses créneaux
+● Créneaux fixes prédéfinis (à la base de 30min) :
+○ 09h00 - 09h30 ✓ Disponible
+○ 09h30 - 10h00 ✓ Disponible
+○ 10h00 - 10h30 ✓ Disponible
+○ 10h30 - 11h00 x Disponible
+○ 11h00 - 11h30 ✓ Disponible
+○ 11h30 - 12h00 ✓ Disponible
+Le système met à jour automatiquement :
+● Créneau réservé: devient indisponible
+● Créneau passé: archivé automatiquement
+● Annulation: le créneau redevient disponible
+US7 : Consulter les demandes d'expertise
+● Liste des demandes reçues
+● Utilisation Stream API : filtrer par statut (EN_ATTENTE, TERMINEE) et par
+priorité.
+● Voir les détails du patient et la question posée
+US8 : Répondre à une expertise
+● Saisir l'avis médical
+● Saisir les recommandations
+● Marquer comme terminée
+Actes techniques médicaux:
+● radiographie
+● Échographie
+● IRM
+● Électrocardiogramme: enregistrement de l'activité électrique du cœur
+● DERMATOLOGIQUES(Laser)
+● Fond d'œil : examen de la rétine
+● analyse de sang
+● analyse d’urine
+Bonus: (une des 2 solutions)
+Pour gérer le staff, il y a deux approches que vous pouvez considérer:
+Option 1: Ajouter le staff directement via SQL ou scripts :
+Option 2: Pour un projet complet, créer un rôle administrateur qui peut gérer le
+staff via une interface
+Les exigences Techniques:
+● Maven
+● Http
+● JAKARTA EE
+● Tomcat ou autre(jetty, netty, glassfish)
+● Servlet, JSP,JSTL
+● authentication stateful(sessions)
+● bcrypt(pour hachage des passwords)
+● csrf protection
+● JUnit/Mockito
+● Jpa / Hibernate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
