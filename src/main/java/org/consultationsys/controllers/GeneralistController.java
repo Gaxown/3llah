@@ -11,8 +11,8 @@ import org.consultationsys.models.enums.Role;
 
 import java.io.IOException;
 
-@WebServlet(name = "SpecialistController", urlPatterns = {"/specialist/*"})
-public class SpecialistController extends HttpServlet {
+@WebServlet(name = "GeneralistController", urlPatterns = {"/generalist/*"})
+public class GeneralistController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -27,8 +27,8 @@ public class SpecialistController extends HttpServlet {
 
         User user = (User) session.getAttribute("user");
 
-        // Check authorization - only specialists can access
-        if (user.getRole() != Role.SPECIALIST) {
+        // Check authorization - only generalists can access
+        if (user.getRole() != Role.GENERAL_PRACTITIONER) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
@@ -56,7 +56,7 @@ public class SpecialistController extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         // Check authorization
-        if (user.getRole() != Role.SPECIALIST) {
+        if (user.getRole() != Role.GENERAL_PRACTITIONER) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
@@ -67,7 +67,7 @@ public class SpecialistController extends HttpServlet {
 
     private void showDashboard(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/specialist/dashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/generalist/dashboard.jsp").forward(request, response);
     }
 }
 

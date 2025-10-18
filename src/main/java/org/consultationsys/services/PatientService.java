@@ -2,6 +2,7 @@ package org.consultationsys.services;
 
 import org.consultationsys.dtos.response.PatientResponseDTO;
 import org.consultationsys.mappers.PatientMapper;
+import org.consultationsys.mappers.VitalSignMapper;
 import org.consultationsys.models.Patient;
 import org.consultationsys.models.VitalSign;
 import org.consultationsys.models.WaitingQueue;
@@ -93,6 +94,11 @@ public class PatientService {
             .map(wq -> {
                 PatientResponseDTO dto = PatientMapper.toDTO(wq.getPatient());
                 dto.setArrivalTime(wq.getArrivalTime());
+
+                // Add latest vital signs for US2
+                Optional<VitalSign> latestVitalSigns = getLatestVitalSigns(wq.getPatient().getId());
+                latestVitalSigns.ifPresent(vs -> dto.setLatestVitalSigns(VitalSignMapper.toDTO(vs)));
+
                 return dto;
             })
             .sorted(Comparator.comparing(PatientResponseDTO::getArrivalTime))

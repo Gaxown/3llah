@@ -10,6 +10,7 @@
         <!-- Entity classes -->
         <class>org.consultationsys.models.User</class>
         <class>org.consultationsys.models.Patient</class>
+        <class>org.consultationsys.models.Nurse</class>
         <class>org.consultationsys.models.Generalist</class>
         <class>org.consultationsys.models.Specialist</class>
         <class>org.consultationsys.models.Consultation</class>

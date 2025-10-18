@@ -8,49 +8,28 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-/**
- * Authentication filter to protect routes requiring login
- */
-@WebFilter(filterName = "AuthFilter", urlPatterns = {
-    "/nurse/*",
-    "/generalist/*",
-    "/specialist/*",
-    "/patients/*",
-    "/consultations/*",
-    "/expertise/*",
-    "/timeslots/*"
-})
+@WebFilter("/*")
 public class AuthFilter implements Filter {
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        // Initialization logic if needed
-    }
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-
         HttpSession session = httpRequest.getSession(false);
 
-        // Check if user is logged in
-        boolean isLoggedIn = (session != null && session.getAttribute("user") != null);
+        String loginURI = httpRequest.getContextPath() + "/login";
+        String cssURI = httpRequest.getContextPath() + "/css";
+        String jsURI = httpRequest.getContextPath() + "/js";
 
-        if (isLoggedIn) {
-            // User is authenticated, proceed with request
+        boolean loggedIn = session != null && session.getAttribute("user") != null;
+        boolean loginRequest = httpRequest.getRequestURI().equals(loginURI);
+        boolean staticResourceRequest = httpRequest.getRequestURI().startsWith(cssURI) || httpRequest.getRequestURI().startsWith(jsURI);
+
+        if (loggedIn || loginRequest || staticResourceRequest) {
             chain.doFilter(request, response);
         } else {
-            // User is not authenticated, redirect to login
-            String contextPath = httpRequest.getContextPath();
-            httpResponse.sendRedirect(contextPath + "/login");
+            httpResponse.sendRedirect(loginURI);
         }
-    }
-
-    @Override
-    public void destroy() {
-        // Cleanup logic if needed
     }
 }
 

@@ -24,7 +24,7 @@ public abstract class User {
     String firstName;
     @Column(nullable = false, unique = true, length = 50)
     String email;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 60)
     String passwordHash;
     @Column(nullable = false)
     boolean active;
@@ -90,12 +90,12 @@ public abstract class User {
      * @return Role enum value
      */
     public Role getRole() {
-        if (this instanceof Generalist) {
+        if (this instanceof Nurse) {
+            return Role.NURSE;
+        } else if (this instanceof Generalist) {
             return Role.GENERAL_PRACTITIONER;
         } else if (this instanceof Specialist) {
             return Role.SPECIALIST;
-        } else if (this.getClass().getSimpleName().equals("Nurse")) {
-            return Role.NURSE;
         }
         return null;
     }

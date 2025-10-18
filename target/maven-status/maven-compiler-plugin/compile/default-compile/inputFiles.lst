@@ -1,4 +1,5 @@
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/repositories/ExpertiseRequestRepository.java
+/home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/utils/CreateTestUser.java
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/dtos/request/ConsultationRequestDTO.java
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/models/enums/ExpertiseRequestStatus.java
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/utils/SessionUtil.java
@@ -60,7 +61,10 @@
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/filters/AuthFilter.java
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/services/AuthenticationService.java
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/mappers/PatientMapper.java
+/home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/utils/TestNurseLogin.java
+/home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/controllers/NurseController.java
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/dtos/request/TimeSlotRequestDTO.java
+/home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/controllers/GeneralistController.java
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/dtos/request/WaitingQueueRequestDTO.java
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/repositories/UserRepository.java
 /home/gaxown/xXx/BankSys/backCons/src/main/java/org/consultationsys/models/Nurse.java

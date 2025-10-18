@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.consultationsys.models.User;
 import org.consultationsys.utils.JPAUtil;
+import org.hibernate.Hibernate;
 
 import java.util.List;
 import java.util.Optional;

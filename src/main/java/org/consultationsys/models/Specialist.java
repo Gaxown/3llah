@@ -21,9 +21,9 @@ public class Specialist extends User {
     private List<TimeSlot> timeSlots;
 
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String specialty;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private double consultationFee;
 
 

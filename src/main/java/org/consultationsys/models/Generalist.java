@@ -6,7 +6,7 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-@DiscriminatorValue("GENERALIST")
+@DiscriminatorValue("GENERAL_PRACTITIONER")
 public class Generalist extends User {
 
     @OneToMany(mappedBy = "generalist", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

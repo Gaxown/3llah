@@ -34,7 +34,7 @@ public class AuthController extends HttpServlet {
             HttpSession session = request.getSession(false);
             if (session != null && session.getAttribute("user") != null) {
                 User user = (User) session.getAttribute("user");
-                redirectToUserDashboard(user.getRole(), response);
+                redirectToUserDashboard(user.getRole(), response, request);
                 return;
             }
 
@@ -54,7 +54,14 @@ public class AuthController extends HttpServlet {
 
         if ("/login".equals(path)) {
             handleLogin(request, response);
+        } else if ("/create-test-nurse".equals(path)) {
+            createTestNurse(response);
         }
+    }
+
+    private void createTestNurse(HttpServletResponse response) throws IOException {
+        authService.createTestNurse();
+        response.getWriter().println("Test nurse created successfully.");
     }
 
     private void handleLogin(HttpServletRequest request, HttpServletResponse response)
@@ -109,7 +116,7 @@ public class AuthController extends HttpServlet {
 
         session.setMaxInactiveInterval(30 * 60);
 
-        redirectToUserDashboard(user.getRole(), response);
+        redirectToUserDashboard(user.getRole(), response, request);
     }
 
     private void handleLogout(HttpServletRequest request, HttpServletResponse response)
@@ -121,8 +128,8 @@ public class AuthController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/login");
     }
 
-    private void redirectToUserDashboard(Role role, HttpServletResponse response) throws IOException {
-        String contextPath = response.encodeRedirectURL("");
+    private void redirectToUserDashboard(Role role, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        String contextPath = request.getContextPath();
 
         switch (role) {
             case NURSE:
@@ -151,4 +158,3 @@ public class AuthController extends HttpServlet {
         request.setAttribute("csrfToken", csrfToken);
     }
 }
-
